@@ -5,7 +5,8 @@
 
 namespace hello_world {
 
-std::string hello();
+    /* RETURN */ /* NAME */ /* PARAMETERS */
+    std::string    hello       ();
 
 }
 
