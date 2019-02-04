@@ -16,7 +16,7 @@ struct Nucleotide {
      */
     init(_ strand: String) throws {
         complementNucleotide = try strand.reduce("") { strand, nucleotide in
-            let compliment = try nucleotide.rnaCompliment()
+            let compliment = try Nucleotide.rnaCompliment(of: nucleotide)
             return strand + String(compliment)
         }
     }
@@ -29,6 +29,21 @@ struct Nucleotide {
     func complementOfDNA() -> String {
         return complementNucleotide
     }
+
+    /**
+     Calculates the RNA compliment of a given
+     */
+    static func rnaCompliment(of nucleotide: Character) throws -> Character {
+        switch nucleotide {
+        case .A: return .U
+        case .C: return .G
+        case .G: return .C
+        case .T: return .A
+
+        default:
+            throw RnaTranscription.TranscriptionError.invalidNucleotide("\(nucleotide) is not a valid Nucleotide")
+        }
+    }
 }
 
 // MARK: - Character+RNACompliment
@@ -39,19 +54,4 @@ fileprivate extension Character {
     static let G: Character = "G"
     static let T: Character = "T"
     static let U: Character = "U"
-
-    /**
-     Calculates the RNA compliment of a given
-     */
-    func rnaCompliment() throws -> Character {
-        switch self {
-        case .A: return .U
-        case .C: return .G
-        case .G: return .C
-        case .T: return .A
-
-        default:
-            throw RnaTranscription.TranscriptionError.invalidNucleotide("\(self) is not a valid Nucleotide")
-        }
-    }
 }

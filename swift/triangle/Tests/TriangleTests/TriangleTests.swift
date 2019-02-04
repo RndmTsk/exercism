@@ -2,7 +2,7 @@ import XCTest
 @testable import Triangle
 
 class TriangleTests: XCTestCase {
-    let triangleKind = (Equilateral:"Equilateral", Isosceles:"Isosceles", Scalene:"Scalene", ErrorKind:"ErrorKind")
+    let triangleKind = (Equilateral:"Equilateral", Isosceles:"Isosceles", Scalene:"Scalene", Degenerate: "Degenerate", ErrorKind:"ErrorKind")
     func testEquilateralTrianglesHaveEqualSides() {
         XCTAssertEqual(triangleKind.Equilateral, Triangle(2, 2, 2).kind)
     }
@@ -59,6 +59,14 @@ class TriangleTests: XCTestCase {
         XCTAssertEqual(triangleKind.ErrorKind, Triangle(7, 3, 2).kind)
     }
 
+    func testDegenerateTriangle() {
+        XCTAssertEqual(triangleKind.Degenerate, Triangle(3, 4, 7).kind)
+    }
+
+    func testSmallEquilateralTriangle() {
+        XCTAssertEqual(triangleKind.Equilateral, Triangle(0.00000000002, 0.00000000002, 0.00000000002).kind)
+    }
+
     static var allTests: [(String, (TriangleTests) -> () throws -> Void)] {
         return [
             ("testEquilateralTrianglesHaveEqualSides", testEquilateralTrianglesHaveEqualSides),
@@ -75,6 +83,10 @@ class TriangleTests: XCTestCase {
             ("testTrianglesWithNegativeSidesAreIllegal", testTrianglesWithNegativeSidesAreIllegal),
             ("testTrianglesViolatingTriangleInequalityAreIllegal", testTrianglesViolatingTriangleInequalityAreIllegal),
             ("testTrianglesViolatingTriangleInequalityAreIllegal3", testTrianglesViolatingTriangleInequalityAreIllegal3),
+            ("testDegenerateTriangle",
+             testDegenerateTriangle),
+            ("testSmallEquilateralTriangle",
+             testSmallEquilateralTriangle)
         ]
     }
 }
